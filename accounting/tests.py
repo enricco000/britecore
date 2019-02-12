@@ -61,7 +61,7 @@ class TestBillingSchedules(unittest.TestCase):
         # Invoices should be made when the class is initiated
         pa = PolicyAccounting(self.policy.id)
         self.assertEquals(len(self.policy.invoices), 12)
-        self.assertEquals(self.policy.invoices[0].amount_due, self.policy.annual_premium)
+        self.assertEquals(self.policy.invoices[0].amount_due, self.policy.annual_premium / 12)
 
 
 class TestReturnAccountBalance(unittest.TestCase):

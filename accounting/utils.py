@@ -106,7 +106,7 @@ class PolicyAccounting(object):
         if self.policy.billing_schedule == "Annual":
             pass
         elif self.policy.billing_schedule == "Two-Pay":
-            first_invoice.amount_due = first_invoice.amount_due / billing_schedules.get(self.policy.billing_schedule)
+            first_invoice.amount_due = self.policy.annual_premium / billing_schedules.get(self.policy.billing_schedule)
             for i in range(1, billing_schedules.get(self.policy.billing_schedule)):
                 months_after_eff_date = i*6
                 bill_date = self.policy.effective_date + relativedelta(months=months_after_eff_date)
@@ -117,7 +117,7 @@ class PolicyAccounting(object):
                                   self.policy.annual_premium / billing_schedules.get(self.policy.billing_schedule))
                 invoices.append(invoice)
         elif self.policy.billing_schedule == "Quarterly":
-            first_invoice.amount_due = first_invoice.amount_due / billing_schedules.get(self.policy.billing_schedule)
+            first_invoice.amount_due = self.policy.annual_premium / billing_schedules.get(self.policy.billing_schedule)
             for i in range(1, billing_schedules.get(self.policy.billing_schedule)):
                 months_after_eff_date = i*3
                 bill_date = self.policy.effective_date + relativedelta(months=months_after_eff_date)
@@ -129,7 +129,7 @@ class PolicyAccounting(object):
                 invoices.append(invoice)
         elif self.policy.billing_schedule == "Monthly":
         # monthly invoice calculation
-            first_invoice.amount_due = first_invoice.amount_due / billing_schedules.get(self.policy.billing_schedule)
+            first_invoice.amount_due = self.policy.annual_premium / billing_schedules.get(self.policy.billing_schedule)
             for i in range(1, billing_schedules.get(self.policy.billing_schedule)):
                 months_after_eff_date = i * 12
                 bill_date = self.policy.effective_date + relativedelta(months=months_after_eff_date)
