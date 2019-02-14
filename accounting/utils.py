@@ -15,14 +15,32 @@ This is the base code for the engineer project.
 class PolicyAccounting(object):
     """
      Each policy has its own instance of accounting.
+     Class inherits from python object every policy has to be backed in the db
+     This class has the following methods:
+     return_account_balance,
+     make_payment,
+     make_invoices,
+     evaluate_cancellation_pending_due_to_non_pay,
+     evaluate_cancel
     """
+
     def __init__(self, policy_id):
+        """
+        Gets policy from database using policy id. Makes invoices if missing
+        :param policy_id: item from db
+        :return: policy object
+        """
         self.policy = Policy.query.filter_by(id=policy_id).one()
 
         if not self.policy.invoices:
             self.make_invoices()
 
     def return_account_balance(self, date_cursor=None):
+        """
+        Calculates the ammount due to a date
+        :param date_cursor: date. Use today if not specified
+        :return due_now: ammount due (int)
+        """
         if not date_cursor:
             date_cursor = datetime.now().date()
 
@@ -43,6 +61,13 @@ class PolicyAccounting(object):
         return due_now
 
     def make_payment(self, contact_id=None, date_cursor=None, amount=0):
+        """
+        Adds payment to the payment table
+        :param contact_id: id of table contacts. Use None if not specified (int)
+        :param date_cursor: date. Use today if not specified
+        :param ammount: ammount payed. Zero if not specified (int)
+        return payment: shows contact id, ammount and date for checking
+        """
         if not date_cursor:
             date_cursor = datetime.now().date()
 
@@ -71,6 +96,11 @@ class PolicyAccounting(object):
         pass
 
     def evaluate_cancel(self, date_cursor=None):
+        """
+        Cancells policy if there are missing payments or if
+        the cancel date has passed
+        :param date_cursor: date. Use today if not specified
+        """
         if not date_cursor:
             date_cursor = datetime.now().date()
 
@@ -90,6 +120,11 @@ class PolicyAccounting(object):
 
 
     def make_invoices(self):
+        """
+        make invoices of the policy
+        according to a billing schedule (annual, two-pay,
+        quarterly, monthly)
+        """
         for invoice in self.policy.invoices:
             invoice.delete()
 
@@ -147,7 +182,7 @@ class PolicyAccounting(object):
         db.session.commit()
 
 ################################
-# The functions below are for the db and 
+# The functions below are for the db and
 # shouldn't need to be edited.
 ################################
 def build_or_refresh_db():
@@ -204,4 +239,3 @@ def insert_data():
     payment_for_p2 = Payment(p2.id, anna_white.id, 400, date(2015, 2, 1))
     db.session.add(payment_for_p2)
     db.session.commit()
-
