@@ -117,3 +117,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Misc files and folders
+venv/
+.idea/
+bin/
+local/
+include/
+
