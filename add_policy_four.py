@@ -8,11 +8,11 @@ from accounting.utils import *
 """
 Create Policy Four
 """
-#Contacts
+# Contacts
 
-p4 = Policy('Policy Four', date(2015,2,1) , 500)
+p4 = Policy('Policy Four', date(2015, 2, 1), 500)
 p4.billing_schedule = 'Two-Pay'
-p4.agent_id = Contact.query.filter_by(name='John Doe', role='Agent').one().id
-p4.named_insured = Contact.query.filter_by(name='Ryan Bucket').one().id
+p4.agent = Contact.query.filter_by(name='John Doe', role='Agent').one().id
+p4.named_insured = Contact.query.filter_by(name='Ryan Bucket', role='Named Insured').one().id
 db.session.add(p4)
 db.session.commit()
