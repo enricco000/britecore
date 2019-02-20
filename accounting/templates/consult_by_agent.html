@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+        <div class="content-section">
+            <form method="POST" action="">
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Enter the Name of the Agent</legend>
+                    <div class="form-group">
+                        {{ form.agent.label(class="form-control-label") }}
+
+                        {% if form.agent.errors %}
+                            {{ form.agent(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.agent.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.agent(class="form-control form-control-lg") }}
+                        {% endif %}
+
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        </div>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Trying to query by Agent? <a class="ml-2" href="{{ url_for('consult_by_agent') }}">Consult by Agent</a>
+            </small>
+        </div>
+{% endblock content %}

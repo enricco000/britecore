@@ -1,7 +1,6 @@
+# app/models.py
 from accounting import db
-# from sqlalchemy.ext.declarative import declarative_base
-# 
-# DeclarativeBase = declarative_base()
+
 
 class Policy(db.Model):
     __tablename__ = 'policies'
@@ -25,6 +24,23 @@ class Policy(db.Model):
 
     invoices = db.relation('Invoice', primaryjoin="Invoice.policy_id==Policy.id")
 
+    def __repr__(self):
+        return "Policy('Policy number: {}', " \
+               "'Effective date: {}', " \
+               "'Status: {}', " \
+               "'Billing schedule: {}', " \
+               "'Annual premium: {}', " \
+               "'Named insured: {}', " \
+               "'Agent: {}')".format(
+                                            self.policy_number,
+                                            self.effective_date,
+                                            self.status,
+                                            self.billing_schedule,
+                                            self.annual_premium,
+                                            self.named_insured,
+                                            self.agent
+        )
+
 
 class Contact(db.Model):
     __tablename__ = 'contacts'
@@ -39,6 +55,13 @@ class Contact(db.Model):
     def __init__(self, name, role):
         self.name = name
         self.role = role
+
+    def __repr__(self):
+        return "Contact('Name: {}' ," \
+               "'Role: {}')".format(
+            self.name,
+            self.role
+        )
 
 
 class Invoice(db.Model):
@@ -62,6 +85,19 @@ class Invoice(db.Model):
         self.cancel_date = cancel_date
         self.amount_due = amount_due
 
+    def __repr__(self):
+        return "Invoice('Billing date: {}' ," \
+               "'Due date: {}' ," \
+               "'Cancellation date: {}' ," \
+               "'Amount due: {}' ," \
+               "'Deleted: {}')".format(
+            self.bill_date,
+            self.due_date,
+            self.cancel_date,
+            self.amount_due,
+            self.deleted
+        )
+
 
 class Payment(db.Model):
     __tablename__ = 'payments'
@@ -80,3 +116,12 @@ class Payment(db.Model):
         self.contact_id = contact_id
         self.amount_paid = amount_paid
         self.transaction_date = transaction_date
+
+    def __repr__(self):
+        return "Payment('Contact id: {}' ," \
+               "'Amount paid: {}' ," \
+               "'Transaction date: {}')".format(
+            self.contact_id,
+            self.amount_paid,
+            self.transaction_date
+        )

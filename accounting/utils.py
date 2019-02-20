@@ -105,7 +105,7 @@ class PolicyAccounting(object):
             .order_by(Invoice.bill_date.desc())\
             .first()
 
-        if last_invoice is not None:
+        if last_invoice:
             print("THIS POLICY IS IN THE EVALUATION PERIOD. IT'S CANCELLING SOON")
 
         else:
@@ -265,7 +265,10 @@ def options():
         effective_date = is_date(effective_date)
         print(effective_date)
 
-        billing_dict = {'1': 'Annual', '2': 'Two_pay', '3': 'Quarterly', '4': 'Monthly'}
+        billing_dict = {'1': 'Annual',
+                        '2': 'Two_pay',
+                        '3': 'Quarterly',
+                        '4': 'Monthly'}
         billing = raw_input(
             "Select a billing schedule\n1. Annual\n2. Two-Pay\n3. Quarterly\n4. Monthly\n")
         billing = billing_dict.get(billing)
@@ -284,7 +287,7 @@ def options():
             p.agent_id = Contact.query.filter_by(name=agent, role='Agent').one().id
         if Contact.query.filter_by(name=named_insured).count() > 0:
             p.named_insured = Contact.query.filter_by(
-                name=name_insured, role='Named Insured').one().id
+                name=named_insured, role='Named Insured').one().id
         db.session.add(p)
         db.session.commit()
         print("\n")
@@ -306,14 +309,18 @@ def options():
                 db.session.commit()
             status = raw_input("Update status? y/[n] ")
             if status == 'y':
-                status_dict = {'1': 'Active', '2': 'Cancelled', '3': 'Expired'}
+                status_dict = {'1': 'Active',
+                               '2': 'Cancelled',
+                               '3': 'Expired'}
                 status = raw_input("Select new status\n1. Active\n2. Cancelled\n3. Expired\n")
                 status = status_dict.get(status)
                 db.session.commit()
             billing_schedule = raw_input("Update billing schedule? y/[n] ")
             if billing_schedule == 'y':
                 billing_schedule_dict = {'1': 'Annual',
-                                         '2': 'Two-Pay', '3': 'Quarterly', '4': 'Monthly'}
+                                         '2': 'Two-Pay',
+                                         '3': 'Quarterly',
+                                         '4': 'Monthly'}
                 billing_schedule = raw_input(
                     "Select new billing schedule\n1. Annual\n2. Two-Pay\n3. Quarterly\n4. Monthly\n")
                 billing_schedule = billing_schedule_dict.get(billing_schedule)
