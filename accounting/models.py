@@ -7,12 +7,13 @@ class Policy(db.Model):
 
     __table_args__ = {}
 
-    #column definitions
+    # column definitions
     id = db.Column(u'id', db.INTEGER(), primary_key=True, nullable=False)
     policy_number = db.Column(u'policy_number', db.VARCHAR(length=128), nullable=False)
     effective_date = db.Column(u'effective_date', db.DATE(), nullable=False)
     status = db.Column(u'status', db.Enum(u'Active', u'Canceled', u'Expired'), default=u'Active', nullable=False)
-    billing_schedule = db.Column(u'billing_schedule', db.Enum(u'Annual', u'Two-Pay', u'Quarterly', u'Monthly'), default=u'Annual', nullable=False)
+    billing_schedule = db.Column(u'billing_schedule', db.Enum(u'Annual', u'Two-Pay', u'Quarterly', u'Monthly'),
+                                 default=u'Annual', nullable=False)
     annual_premium = db.Column(u'annual_premium', db.INTEGER(), nullable=False)
     named_insured = db.Column(u'named_insured', db.INTEGER(), db.ForeignKey('contacts.id'))
     agent = db.Column(u'agent', db.INTEGER(), db.ForeignKey('contacts.id'))
@@ -32,13 +33,13 @@ class Policy(db.Model):
                "'Annual premium: {}', " \
                "'Named insured: {}', " \
                "'Agent: {}')".format(
-                                            self.policy_number,
-                                            self.effective_date,
-                                            self.status,
-                                            self.billing_schedule,
-                                            self.annual_premium,
-                                            self.named_insured,
-                                            self.agent
+            self.policy_number,
+            self.effective_date,
+            self.status,
+            self.billing_schedule,
+            self.annual_premium,
+            self.named_insured,
+            self.agent
         )
 
 
@@ -47,7 +48,7 @@ class Contact(db.Model):
 
     __table_args__ = {}
 
-    #column definitions
+    # column definitions
     id = db.Column(u'id', db.INTEGER(), primary_key=True, nullable=False)
     name = db.Column(u'name', db.VARCHAR(length=128), nullable=False)
     role = db.Column(u'role', db.Enum(u'Named Insured', u'Agent'), nullable=False)
@@ -69,7 +70,7 @@ class Invoice(db.Model):
 
     __table_args__ = {}
 
-    #column definitions
+    # column definitions
     id = db.Column(u'id', db.INTEGER(), primary_key=True, nullable=False)
     policy_id = db.Column(u'policy_id', db.INTEGER(), db.ForeignKey('policies.id'), nullable=False)
     bill_date = db.Column(u'bill_date', db.DATE(), nullable=False)
@@ -104,7 +105,7 @@ class Payment(db.Model):
 
     __table_args__ = {}
 
-    #column definitions
+    # column definitions
     id = db.Column(u'id', db.INTEGER(), primary_key=True, nullable=False)
     policy_id = db.Column(u'policy_id', db.INTEGER(), db.ForeignKey('policies.id'), nullable=False)
     contact_id = db.Column(u'contact_id', db.INTEGER(), db.ForeignKey('contacts.id'), nullable=False)

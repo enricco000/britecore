@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h4 class="article-title">Policies</h4>
+        {% for policy in policies %}
+                <article class="media content-section">
+                      <div class="media-body">
+                        <div class="article-metadata">
+                            <h4 class="article-title">Agent: {{ policy['agent_name'] }}</h4>
+                            <p class="article-content">Policy Number: {{ policy['policy_number'] }}</p>
+                            <p class="article-content">Effective Date: {{ policy['effective_date'] }}</p>
+                            <p class="article-content">Status: {{ policy['status'] }}</p>
+                            <p class="article-content">Billing Scheme: {{ policy['billing_scheme'] }}</p>
+                            <p class="article-content">Annual Premium: ${{ policy['annual_premium'] }}</p>
+                            <p class="article-content">Named Insured: {{ policy['named_insured'] }}</p>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                          {{ form.edit(class="btn btn-outline-info") }}
+                      </div>
+                </article>
+        {% endfor %}
+{% endblock content %}

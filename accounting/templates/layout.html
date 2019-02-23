@@ -30,8 +30,8 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="{{ url_for('consult_by_policy') }}">Consult by Policy</a>
-              <a class="nav-item nav-link" href="{{ url_for('consult_by_agent') }}">Consult by Agent</a>
+              <a class="nav-item nav-link" href="{{ url_for('about_to_cancel') }}">Policies about to cancel</a>
+              <a class="nav-item nav-link" href="{{ url_for('recently_paid') }}">Recently paid Policies</a>
             </div>
           </div>
         </div>
@@ -53,11 +53,13 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Keep an eye on these Policies</h3>
-            <p class='text-muted'>About to Cancel and Recently Paid
+            <h3>Actions on database</h3>
+            <p class='text-muted'>Create Policy, Make Payment, Consult or Edit
               <ul class="list-group">
-              <a href="{{ url_for('about_to_cancel')}}" class="list-group-item list-group-item-light">Policies about to cancel</a>
-              <a href="{{ url_for('recently_paid')}}" class="list-group-item list-group-item-light">Recently paid</a>
+              <a href="{{ url_for('create_policy')}}" class="list-group-item list-group-item">Create Policy</a>
+              <a href="{{ url_for('make_payment')}}" class="list-group-item list-group-item">Make Payment</a>
+              <a href="{{ url_for('consult_by_policy')}}" class="list-group-item list-group-item">Consult or Edit by Policy</a>
+              <a href="{{ url_for('consult_by_agent')}}" class="list-group-item list-group-item">Consult or Edit by Agent</a>
               </ul>
             </p>
           </div>
